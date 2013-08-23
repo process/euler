@@ -1,0 +1,113 @@
+#define PRIMEAMT 1000000
+
+void getprimes(int len) //Generates given number of primes
+{
+	Primes[0] = 2;
+	int a = 3;
+	int j = 0;
+	int pos = 1;
+
+	for(pos = 1; pos < len; a++)
+	{
+		for(j = 0; j < pos ; j++)
+			if(a % Primes[j] == 0)
+				break;
+
+		if(j == pos)
+			Primes[pos++] = a;
+	}
+}
+
+void getprimes() //Sieve of Eratosthenes
+{
+	int i,j;
+	for(i = 0; i<PRIMEAMT; i++)
+		Primes[i] = i+2;
+
+	for(i = 0; i<(int)sqrt((double)PRIMEAMT); i++)
+	{
+		if(Primes[i])
+			for(j = i+Primes[i]; j < PRIMEAMT; j+=Primes[i])
+				Primes[j] = 0;
+	}
+
+	for(i = 0, j = 0; i < PRIMEAMT; i++)
+	{
+		if(Primes[i])
+			Primes[j++] = Primes[i];
+	}
+
+	Primes[j] = 0;
+}
+
+void getprimes() //Lists whether number is prime or not using Sieve of Eratosthenes
+{
+	int i,j;
+
+	for(i = 0; i<PRIMEAMT; i++)
+		Primes[i] = i;
+	
+	Primes[0] = 0;
+	Primes[1] = 0;
+
+	for(i = 1; i<(int)sqrt((double)PRIMEAMT); i++)
+		if(Primes[i])
+			for(j = i+Primes[i]; j < PRIMEAMT; j+=Primes[i])
+				Primes[j] = 0;
+}
+
+void OrderPrimeList(int * PrimeList, int len)
+{
+	int i, j;
+
+	for(i = 0, j = 0; i < len; i++)
+	{
+		if(PrimeList[i])
+			PrimeList[j++] = PrimeList[i];
+	}
+
+	PrimeList[j] = 0;
+}
+
+void SieveOfEratosthenes(int * NumberList, int len)
+{
+	int i,j;
+
+	for(i = 0; i<len; i++)
+		NumberList[i] = i;
+	
+	NumberList[0] = 0;
+	NumberList[1] = 0;
+
+	for(i = 2; i<(int)sqrt((double)len); i++)
+		if(NumberList[i])
+			for(j = i+NumberList[i]; j < len; j+=NumberList[i])
+				NumberList[j] = 0;
+}
+
+char isPrime(int n, int * PrimeList)
+{
+	return PrimeList[n];
+}
+
+void gettriangles(int limit)
+{
+	long long n;
+	for(n = 0; n < limit; n++)
+		TriangleNums[n] = n*(n+1)/2;
+}
+
+void getpentagonals(int limit)
+{
+	long long n;
+	for(n = 0; n < limit; n++)
+		PentagonalNums[n] = n*(3*n-1)/2;
+}
+
+void gethexagonals(int limit)
+{
+	long long n;
+	for(n = 0; n < limit; n++)
+		HexagonalNums[n] = n*(2*n-1);
+}
+
