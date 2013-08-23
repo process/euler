@@ -9,4 +9,4 @@ Problems solved so far: 1-50, 52, 53, 55, 56, 72, 92, 97, 206.
 
 Run a solution with 
 
-    ./run_solution.sh [PROBLEM_NUMBER]
+    ./run_problem.sh [PROBLEM_NUMBER]
