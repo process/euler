@@ -1,0 +1,27 @@
+import math
+
+PRIME_COUNT = 500000000
+primes = range(PRIME_COUNT)
+primes[0], primes[1] = 0, 0
+for i in range(int(math.sqrt(PRIME_COUNT))):
+  if primes[i]:
+    for j in range(i*2, PRIME_COUNT, i):
+      primes[j] = 0
+
+diagonal = 1
+width = 1
+prime_count = 0
+diagonal_count = 1
+
+while True:
+  for i in range(4):
+    diagonal = diagonal + (width - 1)
+    if primes[diagonal]:
+      prime_count += 1
+  width += 2
+  diagonal_count += 4
+  if prime_count * 10 < diagonal_count:
+    print width
+    break
+  else:
+    print width, float(prime_count) / diagonal_count
