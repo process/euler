@@ -1,0 +1,59 @@
+"""
+Early attempts at bruteforcing the solution.
+See the other file for details
+"""
+
+def check_value(n):
+  check_dict = copy.deepcopy(pseudo_trie)
+  for c in str(n):
+    if c in check_dict:
+      next_level = check_dict[c]
+      del check_dict[c]
+      if len(next_level):
+        merge_dict(check_dict, next_level)
+    #print check_dict
+  return not check_dict
+
+def max_next(tree):
+  max_key = None
+  max_val = -1
+  for n in tree.keys():
+    if len(tree[n]) > max_val:
+      max_val = len(tree[n])
+      max_key = n
+  return max_key, max_val
+
+candidate_string = ""
+ps = copy.deepcopy(pseudo_trie)
+while ps:
+  next_char = max_next(ps)[0]
+  remove_node_and_merge(ps, next_char)
+  candidate_string += next_char
+
+print candidate_string, "len:", len(candidate_string)
+
+def max_next_n_(tree, count, n):
+  max_key = None
+  max_val = -1
+  for k in tree.keys():
+    tt = copy.deepcopy(tree)
+    aggregate_count = len(tt[k])
+    remove_node_and_merge(tt, k)
+    if tt and count != n:
+      aggregate_count += max_next_n_(tt, count+1, n)[1] * (0.75**(count+1))
+    if aggregate_count > max_val:
+      max_val = aggregate_count
+      max_key = k
+  return max_key, max_val
+
+def max_next_n(tree, n):
+  return max_next_n_(tree, 0, n)
+
+candidate_string = ""
+ps = copy.deepcopy(pseudo_trie)
+while ps:
+  next_char = max_next_n(ps, 7)[0]
+  remove_node_and_merge(ps, next_char)
+  candidate_string += next_char
+
+print candidate_string, "len:", len(candidate_string)
